@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pro Shortlink Generator</title>
+    <!-- Google Font: Poppins -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        /* --- CSS Styling --- */
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f4f7f6;
+            color: #333;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-image: linear-gradient(to right top, #d16ba5, #c777b9, #ba83ca, #aa8fd8, #9a9ae1, #8aa3f0, #7ab0f7, #6ac0f7, #56cbf1, #44d4e9, #44dfdd, #55e7cf);
+        }
+
+        .container {
+            background-color: #ffffff;
+            padding: 40px 50px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            max-width: 600px;
+            width: 90%;
+        }
+
+        header h1 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+            text-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        header p {
+            color: #666;
+            font-size: 1.1em;
+            margin-bottom: 30px;
+        }
+
+        .guidelines-section h2 {
+            color: #007bff;
+            margin-bottom: 15px;
+            font-size: 1.8em;
+        }
+
+        .guidelines-section ul {
+            list-style: none;
+            padding: 0;
+            text-align: left;
+            margin-bottom: 30px;
+        }
+
+        .guidelines-section li {
+            background-color: #eef3f7;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            font-size: 1.1em;
+        }
+
+        .guidelines-section li::before {
+            content: attr(data-emoji); /* Using data attribute for emojis */
+            margin-right: 10px;
+            font-size: 1.4em;
+        }
+
+        .shortener-form input[type="url"] {
+            width: calc(100% - 24px); /* Adjust for padding */
+            padding: 15px;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 1.1em;
+            transition: border-color 0.3s ease;
+        }
+
+        .shortener-form input[type="url"]:focus {
+            outline: none;
+            border-color: #007bff;
+            box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
+        }
+
+        .shortener-form button,
+        .result-section .copy-container button {
+            background-color: #007bff;
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .shortener-form button:hover,
+        .result-section .copy-container button:hover {
+            background-color: #0056b3;
+            transform: translateY(-2px);
+        }
+
+        .result-section h2 {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 1.6em;
+        }
+
+        .result-section .copy-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .result-section input[type="text"] {
+            flex-grow: 1;
+            background-color: #eef3f7;
+            border: 1px solid #ccc;
+            padding: 15px;
+            border-radius: 8px;
+            font-size: 1.1em;
+            color: #555;
+        }
+
+        .result-section .copy-container button {
+            background-color: #28a745; /* Green for copy */
+        }
+
+        .result-section .copy-container button:hover {
+            background-color: #218838;
+        }
+
+        footer {
+            margin-top: 40px;
+            color: #888;
+            font-size: 0.9em;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .container {
+                padding: 30px 25px;
+            }
+            header h1 {
+                font-size: 2em;
+            }
+            .guidelines-section li {
+                font-size: 1em;
+            }
+            .shortener-form input[type="url"],
+            .result-section input[type="text"] {
+                font-size: 1em;
+            }
+            .shortener-form button,
+            .result-section .copy-container button {
+                padding: 12px 25px;
+                font-size: 1em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>✨ Your Ultimate Link Shortener ✨</h1>
+            <p>Create professional shortlinks in seconds!</p>
+        </header>
+
+        <main>
+            <section class="guidelines-section">
+                <h2>How It Works 🚀</h2>
+                <ul>
+                    <li>🔗 Paste your long URL into the box below.</li>
+                    <li>⚡ Click the "Generate Shortlink" button.</li>
+                    <li>📋 Your unique shortlink will appear, ready to copy!</li>
+                    <li>💡 Shortlinks will be based on your Netlify domain.</li>
+                </ul>
+            </section>
+
+            <section class="shortener-form">
+                <input type="url" id="longUrlInput" placeholder="Enter your long URL here..." required>
+                <button id="generateShortlinkBtn">Generate Shortlink</button>
+            </section>
+
+            <section id="resultSection" class="result-section" style="display: none;">
+                <h2>Your Shortlink:</h2>
+                <div class="copy-container">
+                    <input type="text" id="shortlinkResult" readonly placeholder="Your shortlink will appear here...">
+                    <button id="copyToClipboardBtn">Copy</button>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <p>&copy; 2025 YourBrandName. All rights reserved.</p>
+        </footer>
+    </div>
+
+    <script>
+        // --- JavaScript Logic ---
+        document.addEventListener('DOMContentLoaded', () => {
+            const longUrlInput = document.getElementById('longUrlInput');
+            const generateShortlinkBtn = document.getElementById('generateShortlinkBtn');
+            const resultSection = document.getElementById('resultSection');
+            const shortlinkResultInput = document.getElementById('shortlinkResult');
+            const copyToClipboardBtn = document.getElementById('copyToClipboardBtn');
+
+            // --- Configurable Variables ---
+            // Replace 'your-netlify-app-name' with your actual Netlify site name.
+            // The domain will automatically be generated like: https://your-netlify-app-name.netlify.app
+            // For local testing, you can use a dummy like 'http://localhost:8000' or whatever port you use.
+            const NETLIFY_DOMAIN_PREFIX = 'your-netlify-app-name'; // IMPORTANT: Change this!
+            const REDIRECT_PAGE_NAME = 'redirect.html';
+
+            // --- Event Listener for Generate Button ---
+            generateShortlinkBtn.addEventListener('click', () => {
+                const longUrl = longUrlInput.value.trim();
+
+                if (!longUrl) {
+                    alert('Please enter a URL to shorten.');
+                    return;
+                }
+
+                // Basic URL validation
+                try {
+                    new URL(longUrl);
+                } catch (_) {
+                    alert('Please enter a valid URL (e.g., https://example.com)');
+                    return;
+                }
+
+                // Generate a simple unique identifier (for real apps, use a backend/database)
+                const uniqueId = Date.now().toString(36) + Math.random().toString(36).substr(2, 5);
+
+                // Construct the shortlink.
+                // window.location.origin will give your Netlify domain (e.g., https://your-netlify-app-name.netlify.app)
+                const shortlink = `${window.location.origin}/${REDIRECT_PAGE_NAME}?url=${encodeURIComponent(longUrl)}`;
+
+                // Display the result
+                shortlinkResultInput.value = shortlink;
+                resultSection.style.display = 'block';
+                generateShortlinkBtn.textContent = 'Generated!'; // Visual feedback
+
+                // Optionally disable the button after generation to prevent duplicates
+                // generateShortlinkBtn.disabled = true;
+            });
+
+            // --- Event Listener for Copy Button ---
+            copyToClipboardBtn.addEventListener('click', () => {
+                const shortlink = shortlinkResultInput.value;
+                if (!shortlink) return;
+
+                navigator.clipboard.writeText(shortlink).then(() => {
+                    // Change button text to indicate success
+                    const originalText = copyToClipboardBtn.textContent;
+                    copyToClipboardBtn.textContent = 'Copied!';
+                    copyToClipboardBtn.style.backgroundColor = '#28a745'; // Green
+
+                    // Revert button text after a short delay
+                    setTimeout(() => {
+                        copyToClipboardBtn.textContent = originalText;
+                        // Revert color if you want, or keep it green for emphasis
+                        // copyToClipboardBtn.style.backgroundColor = '#28a745';
+                    }, 2000);
+                }).catch(err => {
+                    console.error('Failed to copy: ', err);
+                    alert('Failed to copy the link. Please copy it manually.');
+                });
+            });
+
+            // Add emojis to guideline list items via JS (if not added directly in HTML)
+            const guidelineItems = document.querySelectorAll('.guidelines-section li');
+            guidelineItems[0].setAttribute('data-emoji', '🔗');
+            guidelineItems[1].setAttribute('data-emoji', '⚡');
+            guidelineItems[2].setAttribute('data-emoji', '📋');
+            guidelineItems[3].setAttribute('data-emoji', '💡');
+        });
+    </script>
+</body>
+</html>
